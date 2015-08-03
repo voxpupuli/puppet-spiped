@@ -29,7 +29,7 @@ define spiped::tunnel(
   # We don't want to ensure it's running, lest we interfere with manual admin
   # config, but we do want to (re)start it when it's first created or modified.
   exec { "start-spiped-${title}":
-    command     => "systemctl restart spiped-${title}",
+    command     => "systemctl daemon-reload && systemctl restart spiped-${title}",
     require     => File[$unitfile],
     subscribe   => File[$unitfile],
     refreshonly => true;
