@@ -1,0 +1,16 @@
+{
+    "name": "chriskuehl-spiped",
+    "version": "1.0.0",
+    "author": "Chris Kuehl",
+    "summary": "spiped tunnel creator",
+    "license": "MIT",
+    "source": "https://github.com/chriskuehl/puppet-spiped",
+    "project_page": "https://github.com/chriskuehl/puppet-spiped",
+    "issues_url": "https://github.com/chriskuehl/puppet-spiped/issues",
+    "dependencies": [
+        {
+            "name": "puppetlabs/stdlib",
+            "version_requirement": ">= 2.3.1"
+        }
+    ]
+}
