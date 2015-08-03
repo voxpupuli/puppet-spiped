@@ -1,6 +1,8 @@
 puppet-spiped
 ========
 
+[![Build Status](https://travis-ci.org/chriskuehl/puppet-spiped.svg)](https://travis-ci.org/chriskuehl/puppet-spiped)
+
 Puppet module for configuring [spiped][spiped] tunnels.
 
 ## Requirements
@@ -31,7 +33,7 @@ On clients, we would define a client tunnel:
 ```puppet
 spiped::tunnel::client { 'redis':
   source => '/var/run/redis.sock',
-  dest   => 'host:1234',
+  dest   => 'redis-host:1234',
   secret => 'hunter2',
 }
 ```
