@@ -1,0 +1,12 @@
+---
+language: python
+install:
+    - pip install pre-commit
+script:
+    - make test
+notifications:
+  email:
+    recipients:
+      - ckuehl@ocf.berkeley.edu
+    on_success: never
+    on_failure: always

@@ -1,0 +1,14 @@
+[Unit]
+Description=spiped tunnel (<%= @name %>)
+
+[Service]
+User=root
+<% if @type == 'client' %>
+ExecStart=spiped -e -D -g -F -k '<%= @keyfile %>' -p /dev/null -s '<%= @source %>' -t '<%= @dest %>'
+<% else %>
+ExecStart=spiped -d -g -F -k '<%= @keyfile %>' -p /dev/null -s '<%= @source %>' -t '<%= @dest %>'
+<% end %>
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
