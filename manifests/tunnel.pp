@@ -5,6 +5,7 @@ define spiped::tunnel(
   $secret,
 ) {
   ensure_resource('package', 'spiped', {'ensure' => 'present'})
+  ensure_resource('file', '/etc/spiped', {'ensure' => 'directory'})
 
   $unitfile = "/lib/systemd/system/spiped-${title}.service"
   $keyfile = "/etc/spiped/${title}.key"
@@ -13,24 +14,22 @@ define spiped::tunnel(
     $unitfile:
       owner   => root,
       group   => root,
-      content => templates('spiped/service.erb');
+      content => template('spiped/service.erb'),
+      require => File[$keyfile];
 
     $keyfile:
-      owner   => root,
-      group   => root,
-      mode    => '0600',
-      content => $secret;
-  }
-
-  service { $title:
-    require   => File[$unitfile],
-    subscribe => File[$unitfile];
+      owner     => root,
+      group     => root,
+      mode      => '0600',
+      show_diff => false,
+      content   => $secret,
+      require   => File['/etc/spiped'];
   }
 
   # We don't want to ensure it's running, lest we interfere with manual admin
-  # config. We do want to start it once, though.
+  # config, but we do want to (re)start it when it's first created or modified.
   exec { "start-spiped-${title}":
-    command     => "systemctl start spiped-${title}",
+    command     => "systemctl restart spiped-${title}",
     require     => File[$unitfile],
     subscribe   => File[$unitfile],
     refreshonly => true;
