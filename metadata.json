@@ -1,6 +1,6 @@
 {
-    "name": "chriskuehl-spiped",
-    "version": "1.0.0",
+    "name": "ckuehl-spiped",
+    "version": "1.0.1",
     "author": "Chris Kuehl",
     "summary": "spiped tunnel creator",
     "license": "MIT",
