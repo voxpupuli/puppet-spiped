@@ -26,12 +26,17 @@ define spiped::tunnel(
       require   => File['/etc/spiped'];
   }
 
-  # We don't want to ensure it's running, lest we interfere with manual admin
-  # config, but we do want to (re)start it when it's first created or modified.
   exec { "start-spiped-${title}":
     command     => "systemctl daemon-reload && systemctl restart spiped-${title}",
     require     => File[$unitfile],
     subscribe   => File[$unitfile],
     refreshonly => true;
+  }
+
+  service { $title:
+    ensure    => running,
+    enable    => true,
+    require   => [File[$unitfile], Exec["start-spiped-${title}"]],
+    subscribe => File[$unitfile];
   }
 }

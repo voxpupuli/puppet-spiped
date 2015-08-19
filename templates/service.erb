@@ -8,7 +8,7 @@ ExecStart=/usr/bin/spiped -e -D -g -F -k '<%= @keyfile %>' -p /dev/null -s '<%= 
 <% else %>
 ExecStart=/usr/bin/spiped -d -g -F -k '<%= @keyfile %>' -p /dev/null -s '<%= @source %>' -t '<%= @dest %>'
 <% end %>
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
