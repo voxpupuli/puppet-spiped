@@ -33,7 +33,7 @@ define spiped::tunnel(
     refreshonly => true;
   }
 
-  service { $title:
+  service { "spiped-${title}":
     ensure    => running,
     enable    => true,
     require   => [File[$unitfile], Exec["start-spiped-${title}"]],
