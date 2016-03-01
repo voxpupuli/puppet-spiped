@@ -1,0 +1,19 @@
+description "spiped tunnel (<%= @name %>)"
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+<% if @user %>
+  setuid <%= @user %>
+  setgid <%= @user %>
+<% end %>
+
+script
+  <% if @type == 'client' %>
+  exec /usr/bin/spiped -e -D -F -k '<%= @keyfile %>' -p /dev/null -s '<%= @source %>' -t '<%= @dest %>'
+  <% else %>
+  exec /usr/bin/spiped -d -F -k '<%= @keyfile %>' -p /dev/null -s '<%= @source %>' -t '<%= @dest %>'
+  <% end %>
+end script
+
+respawn

@@ -2,7 +2,7 @@
 Description=spiped tunnel (<%= @name %>)
 
 [Service]
-User=root
+User=<%= $user %>
 <% if @type == 'client' %>
 ExecStart=/usr/bin/spiped -e -D -g -F -k '<%= @keyfile %>' -p /dev/null -s '<%= @source %>' -t '<%= @dest %>'
 <% else %>
