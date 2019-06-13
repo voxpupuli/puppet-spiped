@@ -8,9 +8,7 @@
     "project_page": "https://github.com/chriskuehl/puppet-spiped",
     "issues_url": "https://github.com/chriskuehl/puppet-spiped/issues",
     "dependencies": [
-        {
-            "name": "puppetlabs/stdlib",
-            "version_requirement": ">= 2.3.1"
-        }
+        { "name": "puppetlabs/stdlib", "version_requirement": ">= 2.3.1 < 7.0.0" },
+        { "name": "camptocamp/systemd", "version_requirement": ">= 1.1.0 < 3.0.0" }
     ]
 }
