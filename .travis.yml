@@ -1,12 +1,47 @@
 ---
-language: python
-install:
-    - pip install pre-commit
+dist: xenial
+language: ruby
+cache: bundler
+before_install:
+  - gem update --system
+  - gem update bundler
+  - bundle --version
 script:
-    - make test
+  - 'bundle exec rake $CHECK'
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 2.4.4
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 5.0" CHECK=test
+  - rvm: 2.5.3
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 6.0" CHECK=test_with_coveralls
+  - rvm: 2.5.3
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 6.0" CHECK=rubocop
+  - rvm: 2.4.4
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 5.0" CHECK=build DEPLOY_TO_FORGE=yes
+branches:
+  only:
+  - master
+  - /^v\d/
 notifications:
-  email:
-    recipients:
-      - ckuehl@ocf.berkeley.edu
-    on_success: never
+  email: false
+  irc:
+    on_success: always
     on_failure: always
+    channels:
+      - "chat.freenode.org#voxpupuli-notifications"
+deploy:
+  provider: puppetforge
+  user: puppet
+  password:
+    secure: "QgLSIFsMCb7nDLbkrxI8mfgs55Had+PgwVZ/uwrYmHKC/5QKLNQKDtjIBxd0OMTdbh0ZorkpaDF9SRwSkCNEOZcuATuCvrhn8HT8xo6NQbXUIcRWeq/A4T94z3okEg6gNTgyTkeQ5vlN+OscIrkHGVDY37qMU03CEx158SQ9Cf7Hd7+DqWNphh2Ne6xuweA20eBdOPvH0RISxO6rVjEHKGxE/h0BWhVrTjGN8DhCYlIvzPByE0vnUo2W+j5PIy9xs1ePO5hiyyhmMeCDgdcAI3DODYULL/8cL3PXlXFfmXhiWQIGlFv1DxAiaCRzMrynF9UH4TDJHuT9FG/qAl3LrM21E/GwVxp5ntcounOOWjcCDwOCOTrWq+N2kGOX3SjdOQ9UcuLhrY75U+F+/PBQz1FSGkQX6+yzgK5f5Ki0XAOprArXRryTcCgPKlZVr5F+tZMJON3u3eEiIKs7AxEpfLT1n2XHVgpQsek/Otf6iHrVgHuZZVRLGz/FbN2oAUXfZBknnwbvbErswDmiv99Lx7guX5kJpBR2IDYyk1GKACJVFA3BQXyVL0d/vjjSmCkTzLGkKplNaTr8PzwNiptVmm3w8og9wNji3jPxEbUAEVlhercKm5eHbTLJR5bpByVFKr0muvKmA3IUQfWW7KVDE4XNfH9bog7jba3qfAsz0sQ="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish the build marked with "DEPLOY_TO_FORGE"
+    condition: "$DEPLOY_TO_FORGE = yes"
