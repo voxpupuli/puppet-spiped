@@ -1,7 +1,8 @@
 puppet-spiped
 ========
 
-[![Build Status](https://travis-ci.org/chriskuehl/puppet-spiped.svg)](https://travis-ci.org/chriskuehl/puppet-spiped)
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-spiped.svg)](https://github.com/voxpupuli/puppet-spiped/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-spiped.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-spiped)
 
 Puppet module for configuring [spiped][spiped] tunnels.
 
