@@ -27,6 +27,7 @@ define spiped::tunnel(
   }
 
   exec { "start-spiped-${title}":
+    path        => ['/usr/sbin','/usr/bin','/sbin','/bin'],
     command     => "systemctl daemon-reload && systemctl restart spiped-${title}",
     require     => File[$unitfile],
     subscribe   => File[$unitfile],
