@@ -1,3 +1,22 @@
+# @summary
+#   Creates and manages the client side of a spiped tunnel.
+#
+# @example Define a client tunnel for connecting to a remote redis server over an spiped tunnel.
+#   spiped::tunnel::client { 'redis':
+#     source_socket_file => '/var/run/redis.sock',
+#     target_host        => 'redis-host'
+#     target_port        => 1234,
+#     secret             => 'hunter2', # You should use a much stronger/longer secret.
+#   }
+#
+# @param secret An arbitrarily-long shared symmetric key.  For full strength encryption, this string should contain 256 bits or more of entropy.
+# @param source_socket_file Unix domain socket file on which spiped should listen for incoming connections.  If specified, `source_host` and `source_port` should not be used.
+# @param source_host hostname or IP address that spiped should listen on. If specified, `source_port` is also required.
+# @param source_port TCP port that spiped should listen on.  Used in conjuction with `source_host`.
+# @param target_socket_file Unix domain socket file to which spiped should connect. If specified, `target_host` and `target_port` should not be used.
+# @param target_host hostname or IP address that spiped should connect to. If specified, `target_port` is also required.
+# @param target_port TCP port that spiped should connect to.
+#
 define spiped::tunnel::client(
   Variant[Sensitive[String[1]],String[1]] $secret,
 

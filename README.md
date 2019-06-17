@@ -7,12 +7,24 @@ puppet-spiped
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/spiped.svg)](https://forge.puppetlabs.com/puppet/spiped)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/spiped.svg)](https://forge.puppetlabs.com/puppet/spiped)
 
-Puppet module for configuring [spiped][spiped] tunnels.
+#### Table of Contents
 
-## Requirements
+1. [Overview](#overview)
+1. [Setup - The basics of getting started with spiped](#setup)
+1. [Usage - Configuration options and additional functionality](#usage)
+1. [Limitations - OS compatibility, etc.](#limitations)
+1. [Development - Guide for contributing to the module](#development)
 
-* Debian >= 8 / Ubuntu >= 16.04 or similar systems that provide an `spiped` package.
-* systemd as init
+## Overview
+
+This puppet module is used for configuring [spiped][spiped] tunnels.
+It supports recent Debian and RedHat family OSes using Puppet 5 or greater.
+
+## Setup
+
+### Debian family systems
+
+Supported Debian and Ubuntu OSes provide suitable `spiped` packages and no additional setup is required.
 
 ### RedHat systems
 
@@ -52,7 +64,7 @@ spiped::tunnel::server { 'redis':
   source_host        => '0.0.0.0',
   source_port        => 1234,
   target_socket_file => '/var/run/redis.sock',
-  secret             => 'hunter2',
+  secret             => 'hunter2', # You should use a much stronger/longer secret!
 }
 ```
 
@@ -62,12 +74,34 @@ On clients, we would define a client tunnel:
 spiped::tunnel::client { 'redis':
   source_socket_file => '/var/run/redis.sock',
   target_host        => 'redis-host'
-  target_port        => 1234',
-  secret             => 'hunter2',
+  target_port        => 1234,
+  secret             => 'hunter2', # You should use a much stronger/longer secret!
 }
 ```
 
-The secret is an arbitrarily-long shared symmetric key. The options above are
-the only supported; this module is kept as simple as possible.
+The secret is an arbitrarily-long shared symmetric key. For [full strength security](https://github.com/Tarsnap/spiped/tree/5c13832aeecdad8a655dadcf5413cc504ad99e49#security-requirements),
+the key should contain 256 or more bits of entropy.
+
+Reference documentation is available in [REFERENCE.md](REFERENCE.md)
+
+## Limitations
+
+* Only systemd based OSes are supported.
+* Not all spiped options are currently configurable with this module.
+
+## Development
+
+This module was migrated from [ckuehl/spiped](https://forge.puppet.com/ckuehl/spiped) to [Vox Pupuli](https://voxpupuli.org)
+
+We highly welcome new contributions to this module, especially those that
+include documentation, and rspec tests ;) but will happily guide you through
+the process, so, yes, please submit that pull request!
+
+Reference documentation is generated using puppet-strings.
+To regenerate it, please run the rake task as follows.
+
+```console
+bundle exec rake reference
+```
 
 [spiped]: https://www.tarsnap.com/spiped.html

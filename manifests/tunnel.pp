@@ -1,3 +1,4 @@
+# @api private
 define spiped::tunnel(
   Enum['client','server'] $type,
   Variant[Sensitive[String[1]],String[1]] $secret,
