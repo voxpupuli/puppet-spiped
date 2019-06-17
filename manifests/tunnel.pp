@@ -7,37 +7,29 @@ define spiped::tunnel(
   ensure_resource('package', 'spiped', {'ensure' => 'present'})
   ensure_resource('file', '/etc/spiped', {'ensure' => 'directory'})
 
-  $unitfile = "/lib/systemd/system/spiped-${title}.service"
   $keyfile = "/etc/spiped/${title}.key"
 
-  file {
-    $unitfile:
-      owner   => root,
-      group   => root,
-      content => template('spiped/service.erb'),
-      require => File[$keyfile];
-
-    $keyfile:
-      owner     => root,
-      group     => root,
-      mode      => '0600',
-      show_diff => false,
-      content   => $secret,
-      require   => File['/etc/spiped'];
+  file { $keyfile:
+    owner     => root,
+    group     => root,
+    mode      => '0600',
+    show_diff => false,
+    content   => $secret,
   }
 
-  exec { "start-spiped-${title}":
-    path        => ['/usr/sbin','/usr/bin','/sbin','/bin'],
-    command     => "systemctl daemon-reload && systemctl restart spiped-${title}",
-    require     => File[$unitfile],
-    subscribe   => File[$unitfile],
-    refreshonly => true;
+  # Previous versions created a unit file here.
+  file { "/lib/systemd/system/spiped-${title}.service":
+    ensure => absent,
+    before => Systemd::Unit_file["spiped-${title}.service"],
+  }
+
+  systemd::unit_file { "spiped-${title}.service":
+    content => template('spiped/service.erb'),
   }
 
   service { "spiped-${title}":
     ensure    => running,
     enable    => true,
-    require   => [File[$unitfile], Exec["start-spiped-${title}"]],
-    subscribe => File[$unitfile];
+    subscribe => Systemd::Unit_file["spiped-${title}.service"],
   }
 }
