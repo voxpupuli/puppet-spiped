@@ -4,8 +4,8 @@ define spiped::tunnel(
   $dest,
   $secret,
 ) {
-  ensure_resource('package', 'spiped', {'ensure' => 'present'})
-  ensure_resource('file', '/etc/spiped', {'ensure' => 'directory'})
+  assert_private()
+  include spiped
 
   $keyfile = "/etc/spiped/${title}.key"
 
@@ -31,5 +31,6 @@ define spiped::tunnel(
     ensure    => running,
     enable    => true,
     subscribe => Systemd::Unit_file["spiped-${title}.service"],
+    require   => Package['spiped'],
   }
 }
