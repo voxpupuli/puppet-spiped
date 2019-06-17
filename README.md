@@ -8,11 +8,34 @@ Puppet module for configuring [spiped][spiped] tunnels.
 
 ## Requirements
 
-* Debian >= 8 / Ubuntu >= 15.04 / similar systems
+* Debian >= 8 / Ubuntu >= 16.04 or similar systems that provide an `spiped` package.
 * systemd as init
 
-The init requirement rules out many versions of Debian or Ubuntu. If you can't
-run systemd as init, this module is not useful to you.
+### RedHat systems
+
+This module can also work with RedHat systems, but you are responsible for providing the spiped package.
+
+Either use the `package_source` parameter, or make sure your system has a repository setup that includes
+the `spiped` package.
+
+eg.
+
+```puppet
+class { 'spiped':
+  package_source => '/path/to/spiped.rpm',
+}
+```
+
+or
+
+```puppet
+yumrepo { 'spiped':
+  baseurl => 'http://repos.example.com/spiped',
+  descr   => 'Internal spiped package repo',
+  enabled => true,
+  before  => Class['spiped'],
+}
+```
 
 ## Usage
 
