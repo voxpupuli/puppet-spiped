@@ -54,7 +54,7 @@ describe 'spiped::tunnel::server' do
         is_expected.to contain_service('spiped-redis').with(
           ensure: 'running',
           enable: true
-        ).that_requires('Package[spiped]').that_subscribes_to('Systemd::Unit_file[spiped-redis.service]')
+        ).that_requires('Package[spiped]').that_subscribes_to(['Systemd::Unit_file[spiped-redis.service]', 'File[/etc/spiped/redis.key]'])
       }
     end
   end
