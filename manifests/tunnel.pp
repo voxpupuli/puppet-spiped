@@ -73,7 +73,10 @@ define spiped::tunnel(
   service { "spiped-${title}":
     ensure    => running,
     enable    => true,
-    subscribe => Systemd::Unit_file["spiped-${title}.service"],
+    subscribe => [
+      Systemd::Unit_file["spiped-${title}.service"],
+      File[$keyfile],
+    ],
     require   => Package['spiped'],
   }
 }
