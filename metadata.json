@@ -8,7 +8,7 @@
     "project_page": "https://github.com/chriskuehl/puppet-spiped",
     "issues_url": "https://github.com/chriskuehl/puppet-spiped/issues",
     "dependencies": [
-        { "name": "puppetlabs/stdlib", "version_requirement": ">= 2.3.1 < 7.0.0" },
+        { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.25.0 < 7.0.0" },
         { "name": "camptocamp/systemd", "version_requirement": ">= 1.1.0 < 3.0.0" }
     ],
     "operatingsystem_support": [
@@ -37,6 +37,12 @@
           "16.04",
           "18.04"
         ]
+      }
+    ],
+    "requirements": [
+      {
+        "name": "puppet",
+        "version_requirement": ">= 5.5.8 < 7.0.0"
       }
     ]
 }
