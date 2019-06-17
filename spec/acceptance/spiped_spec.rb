@@ -7,8 +7,10 @@ describe 'spiped' do
     it 'setups spiped server idempotently' do
       pp = %(
       spiped::tunnel::server { 'redis':
-        source => '[0.0.0.0]:16379',
-        dest   => '127.0.0.1:6379',
+        source_host => '0.0.0.0',
+        source_port => 16379,
+        target_host => '127.0.0.1',
+        target_port => 6379,
         secret => 'hunter2',
       }
       )
@@ -21,8 +23,10 @@ describe 'spiped' do
     it 'setups spiped client idempotently' do
       pp = %(
       spiped::tunnel::client { 'redis':
-        source => '[127.0.0.1]:1234',
-        dest   => "#{server_ip}:16379",
+        source_host => '127.0.0.1',
+        source_port => 1234,
+        target_host => '#{server_ip}',
+        target_port => 16379,
         secret => 'hunter2',
       }
       )

@@ -49,9 +49,10 @@ On `redis-host`, we would define a server tunnel:
 
 ```puppet
 spiped::tunnel::server { 'redis':
-  source => '0.0.0.0:1234',
-  dest   => '/var/run/redis.sock',
-  secret => 'hunter2',
+  source_host        => '0.0.0.0',
+  source_port        => 1234,
+  target_socket_file => '/var/run/redis.sock',
+  secret             => 'hunter2',
 }
 ```
 
@@ -59,9 +60,10 @@ On clients, we would define a client tunnel:
 
 ```puppet
 spiped::tunnel::client { 'redis':
-  source => '/var/run/redis.sock',
-  dest   => 'redis-host:1234',
-  secret => 'hunter2',
+  source_socket_file => '/var/run/redis.sock',
+  target_host        => 'redis-host'
+  target_port        => 1234',
+  secret             => 'hunter2',
 }
 ```
 

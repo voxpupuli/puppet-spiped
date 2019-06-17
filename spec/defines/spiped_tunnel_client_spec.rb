@@ -4,8 +4,9 @@ describe 'spiped::tunnel::client' do
   let(:title) { 'redis' }
   let(:params) do
     {
-      source: '/var/run/redis.sock',
-      dest:   'redis-host:1234',
+      source_socket_file: '/var/run/redis.sock',
+      target_host: 'redis-host',
+      target_port: 1234,
       secret: 'hunter2'
     }
   end
@@ -17,9 +18,9 @@ describe 'spiped::tunnel::client' do
       it { is_expected.to compile }
       it {
         is_expected.to contain_spiped__tunnel('redis').with(
-          type: 'client',
-          source: '/var/run/redis.sock',
-          dest:   'redis-host:1234',
+          source_socket_file: '/var/run/redis.sock',
+          target_host: 'redis-host',
+          target_port: 1234,
           secret: 'hunter2'
         )
       }
@@ -46,7 +47,7 @@ describe 'spiped::tunnel::client' do
           expect(content).to include('Description=spiped tunnel (redis)')
         end
         it 'ExecStart' do
-          expect(content).to include('ExecStart=/usr/bin/spiped -e -D -g -F -k \'/etc/spiped/redis.key\' -p /dev/null -s \'/var/run/redis.sock\' -t \'redis-host:1234\'')
+          expect(content).to include('ExecStart=/usr/bin/spiped -e -D -g -F -k \'/etc/spiped/redis.key\' -s \'/var/run/redis.sock\' -t \'redis-host:1234\'')
         end
       end
 
