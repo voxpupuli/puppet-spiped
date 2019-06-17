@@ -45,6 +45,16 @@ matrix:
     sudo: required
   - rvm: 2.5.3
     bundler_args: --without development release
+    env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_debug=true BEAKER_setfile=debian8-64spipedserver.ma{hostname=spipedserver}-debian8-64spipedclient.a{hostname=spipedclient} BEAKER_HYPERVISOR=docker CHECK=beaker
+    services: docker
+    sudo: required
+  - rvm: 2.5.3
+    bundler_args: --without development release
+    env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_debug=true BEAKER_setfile=debian8-64spipedserver.ma{hostname=spipedserver}-debian8-64spipedclient.a{hostname=spipedclient} BEAKER_HYPERVISOR=docker CHECK=beaker
+    services: docker
+    sudo: required
+  - rvm: 2.5.3
+    bundler_args: --without development release
     env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_debug=true BEAKER_setfile=debian9-64spipedserver.ma{hostname=spipedserver}-debian9-64spipedclient.a{hostname=spipedclient} BEAKER_HYPERVISOR=docker CHECK=beaker
     services: docker
     sudo: required
