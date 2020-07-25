@@ -10,10 +10,9 @@
 # @param package_source
 #   Specifies a source to be passed to the package resource.  Typically, the path to a .deb or .rpm package file.
 #
-class spiped(
+class spiped (
   Optional[String[1]] $package_source = undef,
-)
-{
+) {
   if $package_source {
     $package_provider = $facts['os']['family'] ? {
       'RedHat' => 'rpm',
