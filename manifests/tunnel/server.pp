@@ -17,7 +17,7 @@
 # @param target_host hostname or IP address that spiped should connect to. If specified, `target_port` is also required.
 # @param target_port TCP port that spiped should connect to.
 #
-define spiped::tunnel::server(
+define spiped::tunnel::server (
   Variant[Sensitive[String[1]],String[1]] $secret,
 
   Optional[Stdlib::Unixpath] $source_socket_file = undef,
@@ -27,8 +27,7 @@ define spiped::tunnel::server(
   Optional[Stdlib::Unixpath] $target_socket_file = undef,
   Optional[Stdlib::Host]     $target_host = undef,
   Optional[Stdlib::Port]     $target_port = undef,
-)
-{
+) {
   spiped::tunnel { $title:
     type               => 'server',
     source_socket_file => $source_socket_file,
