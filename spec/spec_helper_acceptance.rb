@@ -1,22 +1,12 @@
-require 'beaker-rspec'
-require 'beaker-puppet'
-require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
+require 'voxpupuli/acceptance/spec_helper_acceptance'
 
-run_puppet_install_helper unless ENV['BEAKER_provision'] == 'no'
-install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
+# The default is to call install_module which only installs modules to a master
+# We need modules on agents as well.
+configure_beaker(modules: false) do |host|
+  install_package(host, 'redis-server')
+  install_package(host, 'redis-tools')
+end
+
+require 'beaker/module_install_helper'
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
-
-RSpec.configure do |c|
-  # Readable test descriptions
-  c.formatter = :documentation
-  hosts.each do |host|
-    if host[:platform] =~ %r{el-7-x86_64} && host[:hypervisor] =~ %r{docker}
-      on(host, "sed -i '/nodocs/d' /etc/yum.conf")
-    end
-
-    install_package(host, 'redis-server')
-    install_package(host, 'redis-tools')
-  end
-end
