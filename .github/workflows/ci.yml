@@ -59,10 +59,10 @@ jobs:
             value: "ubuntu1604-64spipedserver.ma{hostname=spipedserver}-ubuntu1604-64spipedclient.a{hostname=spipedclient}"
           - name: Ubuntu 18.04
             value: "ubuntu1804-64spipedserver.ma{hostname=spipedserver}-ubuntu1804-64spipedclient.a{hostname=spipedclient}"
-          - name: Debian 8
-            value: "debian8-64spipedserver.ma{hostname=spipedserver}-debian8-64spipedclient.a{hostname=spipedclient}"
-          - name: Debian 9
-            value: "debian9-64spipedserver.ma{hostname=spipedserver}-debian9-64spipedclient.a{hostname=spipedclient}"
+          - name: Debian 10
+            value: "debian10-64spipedserver.ma{hostname=spipedserver}-debian10-64spipedclient.a{hostname=spipedclient}"
+          - name: Debian 11
+            value: "debian11-64spipedserver.ma{hostname=spipedserver}-debian11-64spipedclient.a{hostname=spipedclient}"
         puppet: ${{fromJson(needs.setup_matrix.outputs.puppet_major_versions)}}
     name: ${{ matrix.puppet.name }} - ${{ matrix.setfile.name }}
     steps:
