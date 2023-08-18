@@ -49,12 +49,15 @@ describe 'spiped' do
       describe command('sed -i "s/^bind.*/bind 127.0.0.1/g" /etc/redis/redis.conf') do
         its(:exit_status) { is_expected.to eq 0 }
       end
+
       describe command("systemctl start #{redis_service}") do
         its(:exit_status) { is_expected.to eq 0 }
       end
+
       describe port(6379) do
         it { is_expected.to be_listening }
       end
+
       describe port(16_379) do
         it { is_expected.to be_listening }
       end

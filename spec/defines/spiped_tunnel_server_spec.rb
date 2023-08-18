@@ -16,6 +16,7 @@ describe 'spiped::tunnel::server' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+
       it {
         is_expected.to contain_spiped__tunnel('redis').with(
           type: 'server',
@@ -25,15 +26,17 @@ describe 'spiped::tunnel::server' do
           secret: 'hunter2'
         )
       }
+
       it {
         is_expected.to contain_file('/etc/spiped/redis.key').with(
-          owner:      'root',
-          group:      'root',
-          mode:       '0600',
-          show_diff:  false,
-          content:    'hunter2'
+          owner: 'root',
+          group: 'root',
+          mode: '0600',
+          show_diff: false,
+          content: 'hunter2'
         )
       }
+
       it {
         is_expected.to contain_file('/lib/systemd/system/spiped-redis.service').
           with_ensure('absent').
@@ -44,9 +47,11 @@ describe 'spiped::tunnel::server' do
         let(:content) { catalogue.resource('systemd::unit_file', 'spiped-redis.service').send(:parameters)[:content] }
 
         it { is_expected.to contain_systemd__unit_file('spiped-redis.service') }
+
         it 'Description' do
           expect(content).to include('Description=spiped tunnel (redis)')
         end
+
         it 'ExecStart' do
           expect(content).to include('ExecStart=/usr/bin/spiped -d -g -F -k \'/etc/spiped/redis.key\' -s \'[0.0.0.0]:1234\' -t \'/var/run/redis.sock\'')
         end
@@ -75,6 +80,7 @@ describe 'spiped::tunnel::server' do
 
         it { is_expected.to compile.and_raise_error(%r{`source_host` must not be specified when using `source_socket_file`}) }
       end
+
       context 'source_socket_file and source_port' do
         let(:params) do
           {
@@ -87,6 +93,7 @@ describe 'spiped::tunnel::server' do
 
         it { is_expected.to compile.and_raise_error(%r{`source_port` must not be specified when using `source_socket_file`}) }
       end
+
       context 'missing source_host' do
         let(:params) do
           {
@@ -98,6 +105,7 @@ describe 'spiped::tunnel::server' do
 
         it { is_expected.to compile.and_raise_error(%r{either `source_socket_file` or `source_host` and `source_port must be specified}) }
       end
+
       context 'missing source_port' do
         let(:params) do
           {
@@ -110,6 +118,7 @@ describe 'spiped::tunnel::server' do
         it { is_expected.to compile.and_raise_error(%r{either `source_socket_file` or `source_host` and `source_port must be specified}) }
       end
     end
+
     describe 'target parameters' do
       context 'target_socket_file and target_host' do
         let(:params) do
@@ -123,6 +132,7 @@ describe 'spiped::tunnel::server' do
 
         it { is_expected.to compile.and_raise_error(%r{`target_host` must not be specified when using `target_socket_file`}) }
       end
+
       context 'target_socket_file and target_port' do
         let(:params) do
           {
@@ -135,6 +145,7 @@ describe 'spiped::tunnel::server' do
 
         it { is_expected.to compile.and_raise_error(%r{`target_port` must not be specified when using `target_socket_file`}) }
       end
+
       context 'missing target_host' do
         let(:params) do
           {
@@ -146,6 +157,7 @@ describe 'spiped::tunnel::server' do
 
         it { is_expected.to compile.and_raise_error(%r{either `target_socket_file` or `target_host` and `target_port must be specified}) }
       end
+
       context 'missing target_port' do
         let(:params) do
           {
