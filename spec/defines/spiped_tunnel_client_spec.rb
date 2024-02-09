@@ -16,6 +16,7 @@ describe 'spiped::tunnel::client' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+
       it {
         is_expected.to contain_spiped__tunnel('redis').with(
           source_socket_file: '/var/run/redis.sock',
@@ -24,15 +25,17 @@ describe 'spiped::tunnel::client' do
           secret: 'hunter2'
         )
       }
+
       it {
         is_expected.to contain_file('/etc/spiped/redis.key').with(
-          owner:      'root',
-          group:      'root',
-          mode:       '0600',
-          show_diff:  false,
-          content:    'hunter2'
+          owner: 'root',
+          group: 'root',
+          mode: '0600',
+          show_diff: false,
+          content: 'hunter2'
         )
       }
+
       it {
         is_expected.to contain_file('/lib/systemd/system/spiped-redis.service').
           with_ensure('absent').
@@ -43,9 +46,11 @@ describe 'spiped::tunnel::client' do
         let(:content) { catalogue.resource('systemd::unit_file', 'spiped-redis.service').send(:parameters)[:content] }
 
         it { is_expected.to contain_systemd__unit_file('spiped-redis.service') }
+
         it 'Description' do
           expect(content).to include('Description=spiped tunnel (redis)')
         end
+
         it 'ExecStart' do
           expect(content).to include('ExecStart=/usr/bin/spiped -e -D -g -F -k \'/etc/spiped/redis.key\' -s \'/var/run/redis.sock\' -t \'redis-host:1234\'')
         end
