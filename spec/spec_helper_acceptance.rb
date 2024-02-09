@@ -7,6 +7,6 @@ configure_beaker(modules: false) do |host|
   install_package(host, 'redis-tools')
 end
 
-require 'beaker/module_install_helper'
-install_module_on(hosts)
-install_module_dependencies_on(hosts)
+require 'beaker_puppet_helpers'
+install_puppet_module_via_pmt_on(hosts, 'puppetlabs/stdlib')
+install_puppet_module_via_pmt_on(hosts, 'puppet/systemd')
