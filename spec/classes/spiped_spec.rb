@@ -15,7 +15,7 @@ describe 'spiped' do
       end
 
       context 'with package_source' do
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Debian'
           let(:params) { { 'package_source' => '/path/to/spiped.deb' } }
 
