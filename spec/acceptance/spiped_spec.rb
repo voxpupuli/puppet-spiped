@@ -40,7 +40,7 @@ context 'spiped' do
   end
 
   describe 'redis over tunnel' do
-    if fact('networking.fqdn') == 'spipedserver-puppet7.example.com'
+    if fact('networking.fqdn') =~ %r{^spipedserver}
       redis_service = if fact('operatingsystemmajrelease') == '8'
                         'redis-server'
                       else
