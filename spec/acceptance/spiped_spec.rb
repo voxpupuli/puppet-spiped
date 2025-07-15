@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'spiped' do
+context 'spiped' do
   server_ip = hosts_as('spipedserver')[0].get_ip
 
   describe 'spiped::tunnel::server defined type' do
@@ -40,7 +40,7 @@ describe 'spiped' do
   end
 
   describe 'redis over tunnel' do
-    if fact('hostname') == 'spipedserver'
+    if fact('networking.fqdn') == 'spipedserver-puppet7.example.com'
       redis_service = if fact('operatingsystemmajrelease') == '8'
                         'redis-server'
                       else
@@ -49,17 +49,24 @@ describe 'spiped' do
       describe command('sed -i "s/^bind.*/bind 127.0.0.1/g" /etc/redis/redis.conf') do
         its(:exit_status) { is_expected.to eq 0 }
       end
+
       describe command("systemctl start #{redis_service}") do
         its(:exit_status) { is_expected.to eq 0 }
       end
+
       describe port(6379) do
         it { is_expected.to be_listening }
       end
+
       describe port(16_379) do
         it { is_expected.to be_listening }
       end
     else
-      describe command('redis_cli -h 127.0.0.1 -p 1234') do
+      describe port(1234) do
+        it { is_expected.to be_listening }
+      end
+
+      describe command('redis-cli -h 127.0.0.1 -p 1234 PING') do
         its(:stdout) { is_expected.to match %r{PONG} }
       end
     end
