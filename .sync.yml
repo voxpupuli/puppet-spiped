@@ -1,0 +1,4 @@
+---
+.github/workflows/ci.yml:
+  with:
+    beaker_hosts: 'spipedserver:spipedserver.ma;spipedclient:spipedclient.a'
