@@ -2,7 +2,7 @@ puppet-spiped
 ========
 
 [![License](https://img.shields.io/github/license/voxpupuli/puppet-spiped.svg)](https://github.com/voxpupuli/puppet-spiped/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-spiped.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-spiped)
+![Build Status](https://github.com/voxpupuli/puppet-spiped/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/spiped.svg)](https://forge.puppetlabs.com/puppet/spiped)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/spiped.svg)](https://forge.puppetlabs.com/puppet/spiped)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/spiped.svg)](https://forge.puppetlabs.com/puppet/spiped)
