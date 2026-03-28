@@ -7,7 +7,7 @@ describe 'spiped::tunnel::client' do
       source_socket_file: '/var/run/redis.sock',
       target_host: 'redis-host',
       target_port: 1234,
-      secret: 'hunter2'
+      secret: 'hunter2',
     }
   end
 
@@ -22,7 +22,7 @@ describe 'spiped::tunnel::client' do
           source_socket_file: '/var/run/redis.sock',
           target_host: 'redis-host',
           target_port: 1234,
-          secret: 'hunter2'
+          secret: 'hunter2',
         )
       }
 
@@ -32,14 +32,14 @@ describe 'spiped::tunnel::client' do
           group: 'root',
           mode: '0600',
           show_diff: false,
-          content: 'hunter2'
+          content: 'hunter2',
         )
       }
 
       it {
-        is_expected.to contain_file('/lib/systemd/system/spiped-redis.service').
-          with_ensure('absent').
-          that_comes_before('Systemd::Unit_file[spiped-redis.service]')
+        is_expected.to contain_file('/lib/systemd/system/spiped-redis.service')
+          .with_ensure('absent')
+          .that_comes_before('Systemd::Unit_file[spiped-redis.service]')
       }
 
       describe 'unit file' do
@@ -59,7 +59,7 @@ describe 'spiped::tunnel::client' do
       it {
         is_expected.to contain_service('spiped-redis').with(
           ensure: 'running',
-          enable: true
+          enable: true,
         ).that_requires('Package[spiped]').that_subscribes_to(['Systemd::Unit_file[spiped-redis.service]', 'File[/etc/spiped/redis.key]'])
       }
     end

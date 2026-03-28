@@ -20,22 +20,22 @@ describe 'spiped' do
           let(:params) { { 'package_source' => '/path/to/spiped.deb' } }
 
           it {
-            is_expected.to contain_package('spiped').
-              with(
+            is_expected.to contain_package('spiped')
+              .with(
                 ensure: 'present',
                 provider: 'dpkg',
-                source: '/path/to/spiped.deb'
+                source: '/path/to/spiped.deb',
               )
           }
         else
           let(:params) { { 'package_source' => '/path/to/spiped.rpm' } }
 
           it {
-            is_expected.to contain_package('spiped').
-              with(
+            is_expected.to contain_package('spiped')
+              .with(
                 ensure: 'present',
                 provider: 'rpm',
-                source: '/path/to/spiped.rpm'
+                source: '/path/to/spiped.rpm',
               )
           }
         end

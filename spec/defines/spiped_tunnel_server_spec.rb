@@ -7,7 +7,7 @@ describe 'spiped::tunnel::server' do
       source_host: '0.0.0.0',
       source_port: 1234,
       target_socket_file: '/var/run/redis.sock',
-      secret: 'hunter2'
+      secret: 'hunter2',
     }
   end
 
@@ -23,7 +23,7 @@ describe 'spiped::tunnel::server' do
           source_host: '0.0.0.0',
           source_port: 1234,
           target_socket_file: '/var/run/redis.sock',
-          secret: 'hunter2'
+          secret: 'hunter2',
         )
       }
 
@@ -33,14 +33,14 @@ describe 'spiped::tunnel::server' do
           group: 'root',
           mode: '0600',
           show_diff: false,
-          content: 'hunter2'
+          content: 'hunter2',
         )
       }
 
       it {
-        is_expected.to contain_file('/lib/systemd/system/spiped-redis.service').
-          with_ensure('absent').
-          that_comes_before('Systemd::Unit_file[spiped-redis.service]')
+        is_expected.to contain_file('/lib/systemd/system/spiped-redis.service')
+          .with_ensure('absent')
+          .that_comes_before('Systemd::Unit_file[spiped-redis.service]')
       }
 
       describe 'unit file' do
@@ -60,7 +60,7 @@ describe 'spiped::tunnel::server' do
       it {
         is_expected.to contain_service('spiped-redis').with(
           ensure: 'running',
-          enable: true
+          enable: true,
         ).that_requires('Package[spiped]').that_subscribes_to(['Systemd::Unit_file[spiped-redis.service]', 'File[/etc/spiped/redis.key]'])
       }
     end
@@ -74,7 +74,7 @@ describe 'spiped::tunnel::server' do
             source_socket_file: '/path/to/socket',
             source_host: '0.0.0.0',
             target_socket_file: '/var/run/redis.sock',
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -87,7 +87,7 @@ describe 'spiped::tunnel::server' do
             source_socket_file: '/path/to/socket',
             source_port: 1234,
             target_socket_file: '/var/run/redis.sock',
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -99,7 +99,7 @@ describe 'spiped::tunnel::server' do
           {
             source_port: 1234,
             target_socket_file: '/var/run/redis.sock',
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -111,7 +111,7 @@ describe 'spiped::tunnel::server' do
           {
             source_host: '0.0.0.0',
             target_socket_file: '/var/run/redis.sock',
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -126,7 +126,7 @@ describe 'spiped::tunnel::server' do
             source_socket_file: '/path/to/socket',
             target_socket_file: '/var/run/redis.sock',
             target_host: 'redis-host',
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -139,7 +139,7 @@ describe 'spiped::tunnel::server' do
             source_socket_file: '/path/to/socket',
             target_socket_file: '/var/run/redis.sock',
             target_port: 1234,
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -151,7 +151,7 @@ describe 'spiped::tunnel::server' do
           {
             source_socket_file: '/path/to/socket',
             target_port: 1234,
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
@@ -163,7 +163,7 @@ describe 'spiped::tunnel::server' do
           {
             source_socket_file: '/path/to/socket',
             target_host: 'redis-host',
-            secret: 'hunter2'
+            secret: 'hunter2',
           }
         end
 
