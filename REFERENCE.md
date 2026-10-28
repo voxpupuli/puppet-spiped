@@ -219,4 +219,3 @@ Data type: `Optional[Stdlib::Port]`
 TCP port that spiped should connect to.
 
 Default value: `undef`
-
